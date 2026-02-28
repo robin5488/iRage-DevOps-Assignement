@@ -23,12 +23,12 @@ variable "db_engine_version" {
   type        = string
 }
 
-variable "instance_class" {
+variable "db_instance_class" {
   description = "RDS instance class"
   type        = string
 }
 
-variable "allocated_storage" {
+variable "db_allocated_storage" {
   description = "Allocated storage in GB"
   type        = number
 }
@@ -38,13 +38,13 @@ variable "db_name" {
   type        = string
 }
 
-variable "db_username" {
-  description = "Master username"
+variable "rds_secret_name" {
+  description = "AWS Secrets Manager secret name containing RDS credentials (username and password)"
   type        = string
-}
+  default     = null
 
-variable "db_password" {
-  description = "Master password"
-  type        = string
-  sensitive   = true
+  validation {
+    condition     = var.rds_secret_name == null || can(regex("^[a-zA-Z0-9/_-]+$", var.rds_secret_name))
+    error_message = "Secret name must be a valid AWS Secrets Manager secret name."
+  }
 }

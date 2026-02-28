@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = "irage-terraform-bucket"
+    bucket = "irage-terraform-bucket-123456789"
     key = "production/terraform.tfstate"
-    region = var.aws_region
+    region = "eu-north-1"
     dynamodb_table = "terraform-state-locks"
     encrypt = true
   }

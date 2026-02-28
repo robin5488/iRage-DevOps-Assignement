@@ -13,20 +13,20 @@ variable "public_subnet_id" {
   type        = string
 }
 
-variable "instance_type" {
+variable "bastion_instance_type" {
   description = "EC2 instance type for bastion"
   type        = string
   default     = "t3.micro"
 }
 
-variable "ami_id" {
+variable "bastion_ami_id" {
   description = "AMI ID for bastion host"
   type        = string
 }
 
 variable "my_ip" {
-  description = "Your public IP for SSH access (x.x.x.x)"
-  type        = string
+  description = "List of public IPs allowed for SSH access to bastion (e.g., ['192.168.1.37/32', '10.0.0.5/32'])"
+  type        = list(string)
 }
 
 variable "key_name" {

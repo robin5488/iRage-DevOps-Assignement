@@ -10,5 +10,5 @@ output "bastion_public_ip" {
 
 output "bastion_sg_id" {
   description = "Security Group ID of bastion"
-  value       = aws_security_group.bastion-sg.id
+  value       = aws_security_group.bastion_sg.id
 }

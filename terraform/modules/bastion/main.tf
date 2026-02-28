@@ -1,15 +1,15 @@
 # Security Group for Bastion Host
-resource "aws_security_group" "bastion-sg" {
+resource "aws_security_group" "bastion_sg" {
   name        = "${var.env}-bastion-sg"
   description = "Allow SSH access to bastion host"
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "SSH from my IP"
+    description = "SSH from allowed IPs"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}/24"]
+    cidr_blocks = var.my_ip
   }
 
   egress {
@@ -27,10 +27,10 @@ resource "aws_security_group" "bastion-sg" {
 
 # Bastion EC2 Instance
 resource "aws_instance" "bastion" {
-  ami                         = var.ami_id
-  instance_type               = var.instance_type
+  ami                         = var.bastion_ami_id
+  instance_type               = var.bastion_instance_type
   subnet_id                   = var.public_subnet_id
-  vpc_security_group_ids      = [aws_security_group.bastion-sg.id]
+  vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
   associate_public_ip_address = true
   key_name                    = var.key_name
 

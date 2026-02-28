@@ -3,5 +3,5 @@ set -e
 
 yum update -y
 
-# Install PMySQL clients
+# Install MySQL
 yum install -y mysql
