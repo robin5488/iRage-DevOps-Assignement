@@ -65,7 +65,7 @@ resource "aws_db_instance" "this" {
   db_subnet_group_name   = aws_db_subnet_group.this.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
-  multi_az = false
+  multi_az            = false
   publicly_accessible = false
   skip_final_snapshot = true
 

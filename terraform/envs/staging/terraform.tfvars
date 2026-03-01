@@ -1,11 +1,11 @@
 #env values
-env                   = "staging"
+env = "staging"
 
 #network values
-vpc_cidr              = "10.0.0.0/16"
-public_subnet_cidr    = "10.0.1.0/24"
-private_subnet_cidrs = ["10.0.2.0/24","10.0.3.0/24"]
-availability_zones = ["eu-north-1a", "eu-north-1b"]
+vpc_cidr             = "10.0.0.0/16"
+public_subnet_cidr   = "10.0.1.0/24"
+private_subnet_cidrs = ["10.0.2.0/24", "10.0.3.0/24"]
+availability_zones   = ["eu-north-1a", "eu-north-1b"]
 
 #bastion-ec2 values
 bastion_instance_type = "t3.micro"
