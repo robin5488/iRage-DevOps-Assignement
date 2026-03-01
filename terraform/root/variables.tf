@@ -21,14 +21,14 @@ variable "public_subnet_cidr" {
   type        = string
 }
 
-variable "private_subnet_cidr" {
-  description = "CIDR block for private subnet"
-  type        = string
+variable "private_subnet_cidrs" {
+  description = "CIDR block for private subnets"
+  type        = list(string)
 }
 
-variable "availability_zone" {
-  description = "Availability Zone"
-  type        = string
+variable "availability_zones" {
+  description = "Availability Zones"
+  type        = list(string)
 }
 
 ##-------------------bastion-ec2 variables-------------------
@@ -55,11 +55,6 @@ variable "key_name" {
 }
 
 #-------------------mysql-db variables-------------------
-
-variable "db_engine_version" {
-  description = "MySQL engine version"
-  type        = string
-}
 
 variable "db_instance_class" {
   description = "RDS instance class"

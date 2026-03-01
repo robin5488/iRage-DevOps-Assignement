@@ -5,8 +5,8 @@ module "network" {
   env                  = var.env
   vpc_cidr             = var.vpc_cidr
   public_subnet_cidr   = var.public_subnet_cidr
-  private_subnet_cidr  = var.private_subnet_cidr
-  availability_zone    = var.availability_zone
+  private_subnet_cidrs  = var.private_subnet_cidrs
+  availability_zones   = var.availability_zones
 }
 
 #bastion-ec2 module resource creation
@@ -28,11 +28,9 @@ module "rds" {
 
   env               = var.env
   vpc_id            = module.network.vpc_id
-  private_subnet_id = module.network.private_subnet_id
+  private_subnet_ids = module.network.private_subnet_ids
   bastion_sg_id     = module.bastion.bastion_sg_id
-  db_engine_version = var.db_engine_version
   db_instance_class    = var.db_instance_class
   db_allocated_storage = var.db_allocated_storage
   db_name           = var.db_name
 }
-
