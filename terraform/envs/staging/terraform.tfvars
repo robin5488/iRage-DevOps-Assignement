@@ -10,7 +10,7 @@ availability_zones   = ["eu-north-1a", "eu-north-1b"]
 #bastion-ec2 values
 bastion_instance_type = "t3.micro"
 bastion_ami_id        = "ami-073130f74f5ffb161"
-my_ip                 = ["103.190.96.92/32"]
+my_ip                 = ["103.190.98.92/32"]
 key_name              = "my-ssh-key"
 
 #rds values
