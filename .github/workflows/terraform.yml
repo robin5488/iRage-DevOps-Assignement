@@ -9,19 +9,6 @@ on:
     tags:
       - "v*.*.*"
 
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "Environment (staging or production)"
-        required: true
-        type: choice
-        options:
-          - staging
-          - production
-      target:
-        description: "Terraform target to destroy (example: module.bastion.aws_instance.this)"
-        required: true
-
 jobs:
 
 # =====================================================
@@ -105,8 +92,8 @@ jobs:
       - name: Configure AWS credentials (production)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
       - name: Terraform Init (production)
@@ -116,46 +103,3 @@ jobs:
       - name: Terraform Apply (production)
         working-directory: terraform/root
         run: terraform apply -auto-approve -var-file=../envs/production/terraform.tfvars
-
-
-# =====================================================
-# MANUAL DELETE → ONE RESOURCE, ONE ENV
-# =====================================================
-  destroy-single-resource:
-    environment: ${{ inputs.environment }}
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: hashicorp/setup-terraform@v3
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ inputs.environment == 'staging' && secrets.STAGING_AWS_ACCESS_KEY_ID || secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ inputs.environment == 'staging' && secrets.STAGING_AWS_SECRET_ACCESS_KEY || secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-north-1
-
-      - name: Terraform Init
-        working-directory: terraform/root
-        run: |
-          if [ "${{ inputs.environment }}" = "staging" ]; then
-            terraform init -backend-config=../envs/staging/backend.hcl
-          else
-            terraform init -backend-config=../envs/production/backend.hcl
-          fi
-
-      - name: Terraform Destroy Target
-        working-directory: terraform/root
-        run: |
-          if [ "${{ inputs.environment }}" = "staging" ]; then
-            terraform destroy -auto-approve \
-              -target=${{ inputs.target }} \
-              -var-file=../envs/staging/terraform.tfvars
-          else
-            terraform destroy -auto-approve \
-              -target=${{ inputs.target }} \
-              -var-file=../envs/production/terraform.tfvars
-          fi
