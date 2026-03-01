@@ -8,18 +8,13 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "private_subnet_id" {
-  description = "Private subnet ID for RDS"
-  type        = string
+variable "private_subnet_ids" {
+  description = "Private subnet IDs for RDS"
+  type        = list(string)
 }
 
 variable "bastion_sg_id" {
   description = "Security Group ID of bastion host"
-  type        = string
-}
-
-variable "db_engine_version" {
-  description = "MySQL engine version"
   type        = string
 }
 

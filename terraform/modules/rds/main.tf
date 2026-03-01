@@ -41,7 +41,7 @@ resource "aws_security_group" "rds_sg" {
 # DB Subnet Group (Private Subnet Only)
 resource "aws_db_subnet_group" "this" {
   name       = "${var.env}-mysql-subnet-group"
-  subnet_ids = [var.private_subnet_id]
+  subnet_ids = var.private_subnet_ids
 
   tags = {
     Name = "${var.env}-mysql-subnet-group"
@@ -54,7 +54,6 @@ resource "aws_db_instance" "this" {
   identifier = "${var.env}-mysql-rds"
 
   engine         = "mysql"
-  engine_version = var.db_engine_version
   instance_class = var.db_instance_class
 
   allocated_storage = var.db_allocated_storage
@@ -66,6 +65,7 @@ resource "aws_db_instance" "this" {
   db_subnet_group_name   = aws_db_subnet_group.this.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
+  multi_az = false
   publicly_accessible = false
   skip_final_snapshot = true
 

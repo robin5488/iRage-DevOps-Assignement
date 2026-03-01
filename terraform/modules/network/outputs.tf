@@ -8,7 +8,7 @@ output "public_subnet_id" {
   value       = aws_subnet.public.id
 }
 
-output "private_subnet_id" {
-  description = "Private subnet ID"
-  value       = aws_subnet.private.id
+output "private_subnet_ids" {
+  description = "List of private subnet IDs"
+  value = aws_subnet.private[*].id
 }
