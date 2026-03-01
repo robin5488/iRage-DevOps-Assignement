@@ -1,29 +1,49 @@
+# --------------------------------------------------
 # Terraform
+# --------------------------------------------------
+
+# State files
 *.tfstate
-*.tfstate.backup
-.terraform/
-.terraform.lock.hcl
+*.tfstate.*
 crash.log
+crash.*.log
+
+# Terraform working directory
+.terraform/
+
+# Provider lock file (optional: remove if you want to commit it)
+.terraform.lock.hcl
+
+# Override files
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-.terraform.tfstate*
 
+# --------------------------------------------------
 # Sensitive variable files
+# --------------------------------------------------
 *.tfvars
 *.tfvars.json
 
-# Ignore CLI configuration files
+# --------------------------------------------------
+# Terraform CLI config
+# --------------------------------------------------
 .terraformrc
 terraform.rc
 
-# Local IDE/editor files
+# --------------------------------------------------
+# IDE / Editor files
+# --------------------------------------------------
 .vscode/
-*.log
-*.bak
+.idea/
 *.swp
+*.bak
+*.tmp
+*.log
 
-# OS generated files
+# --------------------------------------------------
+# OS files
+# --------------------------------------------------
 .DS_Store
 Thumbs.db
